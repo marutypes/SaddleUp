@@ -1,0 +1,41 @@
+{
+  "name": "saddle-up",
+  "version": "0.1.0",
+  "description": "An easy-to-use testing framework for node servers everywhere",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "sk test",
+    "lint": "sk lint",
+    "type-check": "sk type-check",
+    "build": "sk build",
+    "prerelease": "yarn build",
+    "release": "yarn version"
+  },
+  "keywords": [
+    "koa",
+    "test"
+  ],
+  "author": "themallen",
+  "license": "ISC",
+  "dependencies": {
+    "jest-matcher-utils": "^26.1.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "koa": "^2.13.0",
+    "@sewing-kit/eslint-plugin": "^0.0.14",
+    "@sewing-kit/plugin-babel": "^0.0.38",
+    "@sewing-kit/plugin-javascript": "^0.1.1",
+    "@sewing-kit/plugin-package-flexible-outputs": "^0.1.1",
+    "@sewing-kit/cli": "^0.1.0",
+    "@sewing-kit/config": "^0.1.0",
+    "@sewing-kit/plugin-eslint": "^0.1.0",
+    "@sewing-kit/plugin-jest": "^0.1.1",
+    "@sewing-kit/plugin-typescript": "^0.1.1",
+    "@types/jest": "^26.0.4",
+    "@types/koa": "^2.11.3",
+    "@types/node": "^14.0.20",
+    "@types/node-fetch": "^2.5.7",
+    "typescript": "^3.9.5"
+  }
+}
