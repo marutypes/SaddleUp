@@ -11,6 +11,10 @@ export function listen(
       ? listenableOrFactory
       : listenableOrFactory(port, host);
 
+    if (listenable instanceof Server && listenable.listening) {
+      return listenable;
+    }
+
     const server = listenable
       .listen(port, host)
       .once('error', function (err: Error) {
