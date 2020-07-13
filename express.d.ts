@@ -1,0 +1,1 @@
+export * from "./build/ts/adapter-express/index";

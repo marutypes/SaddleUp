@@ -1,67 +1,67 @@
-import {Context} from 'koa';
 import {
   matcherHint,
   printExpected,
   printReceived,
+  diff,
   RECEIVED_COLOR as receivedColor,
-  matcherErrorMessage,
 } from 'jest-matcher-utils';
+
+import {FetchResult} from '../adapter-koa';
+import {assertIsResponse} from './utilities';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace jest {
     interface Matchers<R, T = {}> {
-      toHaveKoaState(state: any): void;
+      toHaveKoaState(state: any): Promise<void>;
     }
   }
 }
 
-function toHaveKoaState(this: jest.MatcherUtils, ctx: Context, given: any) {
+function toHaveKoaState(
+  this: jest.MatcherUtils,
+  response: FetchResult,
+  expectedState: any,
+) {
   const expectation = 'toHaveKoaState';
   const notExpectation = `.not.${expectation}`;
   const isNot = this.isNot;
 
-  assertIsContext(ctx, {
+  assertIsResponse(response, {
     expectation,
     isNot,
   });
 
-  const pass = Object.keys(given).every((key) =>
-    this.equals(ctx.state[key], given[key]),
+  const resp = response.clone();
+  const {koaState} = response;
+
+  const pass = Object.keys(expectedState).every((key) =>
+    this.equals(koaState[key], expectedState[key]),
   );
 
-  const prettyCtx = JSON.stringify(ctx);
-  const prettyGivenState = JSON.stringify(given);
-  const prettyState = JSON.stringify(ctx.state);
+  const prettyResponse = JSON.stringify(resp);
 
   const message = pass
     ? () =>
         `${matcherHint(notExpectation, 'response')}\n\n` +
-        `Expected the ctx:\n  ${receivedColor(prettyCtx)}\n` +
-        `Not to contain state:\n  ${printExpected(prettyState)}\n` +
-        `But it did:\n  ${receivedColor(prettyGivenState)}\n`
-    : () =>
-        `${matcherHint('.not.toContainReactText', 'response')}\n\n` +
-        `Expected the ctx:\n  ${receivedColor(prettyCtx)}\n` +
-        `With state:\n  ${printReceived(prettyGivenState)}\n` +
-        `To contain state:\n  ${printExpected(prettyState)}\n`;
+        `Expected the Response:\n  ${receivedColor(prettyResponse)}\n` +
+        `Not to have associated Koa state:\n  ${printExpected(
+          expectedState,
+        )}\n` +
+        `But it did:\n  ${printReceived(koaState)}\n`
+    : () => {
+        const diffString = diff(expectedState, koaState);
+        return (
+          `${matcherHint(expectation, 'response')}\n\n` +
+          `Expected the Response:\n  ${receivedColor(prettyResponse)}\n` +
+          `To have headers:\n  ${printExpected(expectedState)}\n` +
+          `Received:\n  ${printReceived(koaState)}\n${
+            diffString ? `Difference:\n${diffString}\n` : ''
+          }`
+        );
+      };
 
   return {pass, message};
-}
-
-function assertIsContext(
-  ctx: any,
-  {expectation, isNot}: {expectation: string; isNot: boolean},
-) {
-  if (ctx == null || typeof ctx !== 'object' || ctx.state == null) {
-    throw new Error(
-      matcherErrorMessage(
-        matcherHint(`.${expectation}`, undefined, undefined, {isNot}),
-        `${receivedColor('received')} value must be a Context object`,
-        `Received ${receivedColor(ctx)}.`,
-      ),
-    );
-  }
 }
 
 expect.extend({

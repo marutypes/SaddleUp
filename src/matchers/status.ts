@@ -34,7 +34,7 @@ export async function toHaveStatus(
         `Not to have status:\n  ${printExpected(givenStatus)}\n` +
         `But it did:\n  ${receivedColor(status)}\n`
     : () =>
-        `${matcherHint('.not.toContainReactText', 'response')}\n\n` +
+        `${matcherHint(expectation, 'response')}\n\n` +
         `Expected the Response:\n  ${receivedColor(prettyResponse)}\n` +
         `With status:\n  ${printReceived(status)}\n` +
         `To have status:\n  ${printExpected(givenStatus)}\n`;
@@ -68,7 +68,7 @@ export async function toHaveStatusText(
         `Not to have statusText:\n  ${printExpected(givenStatusText)}\n` +
         `But it did:\n  ${receivedColor(status)}\n`
     : () =>
-        `${matcherHint('.not.toContainReactText', 'response')}\n\n` +
+        `${matcherHint(expectation, 'response')}\n\n` +
         `Expected the Response:\n  ${receivedColor(prettyResponse)}\n` +
         `With statusText:\n  ${printReceived(status)}\n` +
         `To have statusText:\n  ${printExpected(givenStatusText)}\n`;

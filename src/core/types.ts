@@ -5,6 +5,7 @@ import {Request, Response} from 'node-fetch';
 export interface Options {
   host: string;
   port: number;
+  cookies: Record<string, string>;
 }
 
 export interface Listenable {

@@ -1,14 +1,18 @@
 import {toHaveBodyText, toHaveBodyJson} from './body';
 import {toHaveStatus, toHaveStatusText} from './status';
+import {toHaveSetCookie, toHaveCookies} from './cookies';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace jest {
     interface Matchers<R, T = {}> {
-      toHaveBodyJson(json: any): void;
-      toHaveBodyText(text: string): void;
-      toHaveStatus(status: number): void;
-      toHaveStatusText(status: string): void;
+      toHaveBodyJson(json: any): Promise<void>;
+      toHaveBodyText(text: string): Promise<void>;
+      toHaveStatus(status: number): Promise<void>;
+      toHaveHeaders(headers: Record<string, string>): Promise<void>;
+      toHaveStatusText(status: string): Promise<void>;
+      toHaveSetCookie(cookieName: string, value?: string): Promise<void>;
+      toHaveCookies(cookies: Record<string, string>): Promise<void>;
     }
   }
 }
@@ -18,4 +22,6 @@ expect.extend({
   toHaveBodyJson,
   toHaveStatus,
   toHaveStatusText,
+  toHaveSetCookie,
+  toHaveCookies,
 });

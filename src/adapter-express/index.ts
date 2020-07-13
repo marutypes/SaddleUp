@@ -1,24 +1,23 @@
-import Koa, {Middleware} from 'koa';
+import {Express, Handler} from 'express';
 
-import {unsaddle, SaddleUp, Options} from '..';
-import {KoaAdapter, FetchResult, DecorationOptions} from './adapter';
+import {unsaddle, Options, SaddleUp} from '..';
+
+import {FetchResult, ExpressAdapter, DecorationOptions} from './adapter';
 
 export {unsaddle, Options, FetchResult};
 
 export async function saddle(
-  app: Koa | Middleware,
+  app: Express | Handler,
   {
     beforeMiddleware,
     afterMiddleware,
-    state,
     ...options
   }: Partial<Options> & DecorationOptions = {},
 ) {
-  const adapter = new KoaAdapter();
+  const adapter = new ExpressAdapter();
   const listenable = adapter.decorate(app, {
     beforeMiddleware,
     afterMiddleware,
-    state,
   });
   return SaddleUp.create<FetchResult>(listenable, adapter, options);
 }

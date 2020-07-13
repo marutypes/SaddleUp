@@ -1,8 +1,8 @@
 import {Request, Response} from 'node-fetch';
 import {Adapter, Listenable} from './types';
-import {SaddleUp, ID_HEADER} from './SaddleUp';
+import {SaddleUp, Headers} from './SaddleUp';
 
-export {Adapter, SaddleUp, Listenable, ID_HEADER};
+export {Adapter, SaddleUp, Listenable, Headers};
 
 export interface Options {
   host: string;

@@ -1,10 +1,12 @@
 import {Response, Request} from 'node-fetch';
 import Koa, {Middleware, Context} from 'koa';
 
-import {Adapter, ID_HEADER} from '..';
+import {Adapter, Headers} from '..';
 import {preuse} from './utilities';
 
-export type FetchResult = [Response, Context];
+export interface FetchResult extends Response {
+  koaState: any;
+}
 
 export interface DecorationOptions {
   beforeMiddleware?: Middleware[];
@@ -28,7 +30,7 @@ export class KoaAdapter implements Adapter<FetchResult> {
     beforeMiddleware.reverse().forEach((middleware) => preuse(koa, middleware));
 
     preuse(koa, async (ctx, next) => {
-      const id = ctx.get(ID_HEADER);
+      const id = ctx.get(Headers.SaddleId);
       this.contexts.set(id, ctx);
       ctx.state = state;
       await next();
@@ -43,10 +45,10 @@ export class KoaAdapter implements Adapter<FetchResult> {
   }
 
   fetchResult(req: Request, resp: Response) {
-    const id = req.headers.get(ID_HEADER);
+    const id = req.headers.get(Headers.SaddleId);
     if (id == null) {
       throw new Error(
-        `No ${ID_HEADER} found on request: ${req}. This really shouldn't happen, are you manually using the adapter? If not file an issue please!`,
+        `No ${Headers.SaddleId} header found on request: ${req}. This really shouldn't happen, are you manually using the adapter? If not file an issue please!`,
       );
     }
 
@@ -57,6 +59,7 @@ export class KoaAdapter implements Adapter<FetchResult> {
       );
     }
 
-    return [resp, ctx] as FetchResult;
+    Object.defineProperty(resp, 'koaState', {value: ctx.state});
+    return resp as FetchResult;
   }
 }

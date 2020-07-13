@@ -9,6 +9,8 @@ export default createPackage((pkg) => {
   pkg.runtime(Runtime.Node);
   pkg.entry({root: './src/index'});
   pkg.entry({name: 'koa', root: './src/adapter-koa'});
+  pkg.entry({name: 'connect', root: './src/adapter-connect'});
+  pkg.entry({name: 'express', root: './src/adapter-express'});
   pkg.entry({
     name: 'matchers',
     root: './src/matchers/index',
