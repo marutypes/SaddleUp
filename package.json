@@ -16,7 +16,7 @@
     "test"
   ],
   "author": "themallen",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "jest-matcher-utils": "^26.1.0",
     "node-fetch": "^2.6.0",
