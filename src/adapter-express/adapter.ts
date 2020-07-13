@@ -1,5 +1,5 @@
 import {Response as FetchResult, Request as FetchRequest} from 'node-fetch';
-import express, {Request, Response, Handler, Express} from 'express';
+import express, {Handler, Express} from 'express';
 
 import {Adapter} from '..';
 import {preuse} from './utilities';

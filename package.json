@@ -7,7 +7,7 @@
     "test": "sk test",
     "lint": "sk lint",
     "type-check": "sk type-check",
-    "build": "sk build",
+    "build": "sk build && yarn tsc",
     "prerelease": "yarn build",
     "release": "yarn publish"
   },
@@ -18,6 +18,7 @@
   "author": "themallen",
   "license": "MIT",
   "dependencies": {
+    "@sewing-kit/plugin-package-typescript": "^0.1.17",
     "jest-matcher-utils": "^26.1.0",
     "node-fetch": "^2.6.0",
     "tough-cookie": "^4.0.0"

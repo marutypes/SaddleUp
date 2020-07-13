@@ -7,7 +7,6 @@ import {
   diff,
 } from 'jest-matcher-utils';
 
-import {Headers} from '..';
 import {assertIsResponse, stringResponse} from './utilities';
 
 export function toHaveHeaders(

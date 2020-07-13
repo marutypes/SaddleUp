@@ -19,5 +19,5 @@ export default createPackage((pkg) => {
     name: 'koa-matchers',
     root: './src/matchers/koa',
   });
-  pkg.use(jest(), eslint(), javascript(), typescript(), buildFlexibleOutputs());
+  pkg.use(buildFlexibleOutputs(), jest(), eslint(), javascript(), typescript());
 });
