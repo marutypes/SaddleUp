@@ -1,6 +1,7 @@
 import {toHaveBodyText, toHaveBodyJson} from './body';
 import {toHaveStatus, toHaveStatusText} from './status';
 import {toHaveSetCookie, toHaveCookies} from './cookies';
+import {toHaveHeaders} from './headers';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -21,6 +22,7 @@ expect.extend({
   toHaveBodyText,
   toHaveBodyJson,
   toHaveStatus,
+  toHaveHeaders,
   toHaveStatusText,
   toHaveSetCookie,
   toHaveCookies,
