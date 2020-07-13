@@ -1,1 +1,0 @@
-export * from "./build/ts/adapter-koa/index";
