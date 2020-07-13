@@ -7,7 +7,7 @@
     "test": "sk test",
     "lint": "sk lint",
     "type-check": "sk type-check",
-    "build": "sk build && yarn tsc",
+    "build": "sk build",
     "prerelease": "yarn build",
     "release": "yarn publish"
   },
