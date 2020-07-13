@@ -4,5 +4,4 @@ module.exports = {
     'plugin:@sewing-kit/react',
     'plugin:@sewing-kit/prettier',
   ],
-  ignorePatterns: ['node_modules/', 'build/', '!**/.eslintrc.js'],
 };

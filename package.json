@@ -5,7 +5,7 @@
   "main": "src/index.mjs",
   "scripts": {
     "test": "sk test",
-    "lint": "sk lint",
+    "lint": "yarn eslint",
     "type-check": "sk type-check",
     "build": "sk build",
     "prerelease": "yarn build",
