@@ -1,6 +1,6 @@
 {
   "name": "saddle-up",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "An easy-to-use testing framework for node servers everywhere",
   "main": "src/index.mjs",
   "scripts": {
