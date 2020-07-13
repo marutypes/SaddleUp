@@ -1,6 +1,6 @@
 {
   "name": "saddle-up",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An easy-to-use testing framework for node servers everywhere",
   "main": "src/index.mjs",
   "scripts": {
@@ -9,7 +9,7 @@
     "type-check": "sk type-check",
     "build": "sk build",
     "prerelease": "yarn build",
-    "release": "yarn version"
+    "release": "yarn publish"
   },
   "keywords": [
     "koa",
