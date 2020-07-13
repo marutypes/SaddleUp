@@ -8,8 +8,8 @@ yarn add saddle-up --dev
 
 ## ✨Features ✨
 
-- Server framework agnostic (though comes with some extra niceties for ([Express](https://github.com/expressjs/express)/[connect](https://github.com/senchalabs/connect) style middleware, and for [koa](https://koajs.com/))
-- Testing framework agnostic (though comes with some handy matchers for [jest](https://jestjs.io/en/)
+- Server framework agnostic (though comes with some extra niceties for [Express](https://github.com/expressjs/express)/[connect](https://github.com/senchalabs/connect) style middleware, and for [koa](https://koajs.com/))
+- Testing framework agnostic (though comes with some handy matchers for [jest](https://jestjs.io/en/))
 - Test the way you write code, using the standard `fetch` API and `Response` / `Request` objects
 - Minimal dependencies, take a look at our [package.json](package.json)!
 - Parallel test safe
