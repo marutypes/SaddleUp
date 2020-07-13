@@ -1,20 +1,21 @@
 import {Response, Request} from 'node-fetch';
 import Koa, {Middleware, Context} from 'koa';
 
-import {Adapter, Headers} from '..';
+import {Adapter, Headers, Options} from '..';
 import {preuse} from './utilities';
 
 export interface FetchResult extends Response {
   koaState: any;
 }
 
-export interface DecorationOptions {
+export interface DecorationOptions extends Options {
   beforeMiddleware?: Middleware[];
   afterMiddleware?: Middleware[];
   state?: any;
 }
 
-export class KoaAdapter implements Adapter<FetchResult> {
+export class KoaAdapter
+  implements Adapter<Koa, FetchResult, DecorationOptions> {
   private contexts: Map<string, Context> = new Map();
 
   decorate(
@@ -23,7 +24,7 @@ export class KoaAdapter implements Adapter<FetchResult> {
       state = {},
       beforeMiddleware = [],
       afterMiddleware = [],
-    }: DecorationOptions = {},
+    }: Partial<DecorationOptions> = {},
   ) {
     const koa = appOrMiddleware instanceof Koa ? appOrMiddleware : new Koa();
 

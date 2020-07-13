@@ -8,10 +8,17 @@ export interface Options {
   cookies: Record<string, string>;
 }
 
-export interface Listenable {
+export type Listenable = ListenableFactory | ListenableObject;
+
+export interface ListenableFactory {
+  (port: number, host: string): ListenableObject;
+}
+
+export interface ListenableObject {
   listen(port?: number, host?: string): Server;
 }
 
-export interface Adapter<FetchResult = Response> {
-  fetchResult: (request: Request, response: Response) => FetchResult;
+export interface Adapter<AppInput, FetchResult, Opts = Options> {
+  decorate(app: AppInput, options?: Partial<Opts>): Listenable;
+  fetchResult(request: Request, response: Response): FetchResult;
 }

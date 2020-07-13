@@ -22,6 +22,21 @@ describe('saddle', () => {
     await expect(resp).toHaveStatusText('OK');
   });
 
+  it('works with a factory', async () => {
+    const server = createServer((_req, res) => {
+      res.writeHead(200);
+      res.end('hi hello');
+    });
+
+    const wrapper = await saddle((port, host) => server.listen(port, host));
+    const resp = await wrapper.fetch('/');
+
+    await expect(resp).not.toHaveBodyText('hsfasfdasfi hello');
+    await expect(resp).toHaveBodyText('hi hello');
+    await expect(resp).toHaveStatus(200);
+    await expect(resp).toHaveStatusText('OK');
+  });
+
   it('can assert against JSON', async () => {
     const server = createServer((_req, res) => {
       res.writeHead(200);

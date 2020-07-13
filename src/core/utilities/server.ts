@@ -1,21 +1,24 @@
 import {Server} from 'http';
-import {Listenable} from '../types';
+import {Listenable, ListenableObject} from '../types';
 
 export function listen(
-  listenable: Listenable | Server,
+  listenableOrFactory: Listenable,
   port = 0,
   host = '127.0.0.1',
 ) {
   return new Promise<Server>((resolve, reject) => {
-    const server = listenable.listen(port, host);
+    const listenable = isListenableObject(listenableOrFactory)
+      ? listenableOrFactory
+      : listenableOrFactory(port, host);
 
-    server.once('error', function (err: Error) {
-      reject(err);
-    });
-
-    server.once('listening', function () {
-      resolve(server);
-    });
+    const server = listenable
+      .listen(port, host)
+      .once('error', function (err: Error) {
+        reject(err);
+      })
+      .once('listening', function () {
+        resolve(server);
+      });
   });
 }
 
@@ -29,4 +32,10 @@ export function close(server: Server) {
       }
     });
   });
+}
+
+function isListenableObject(
+  listenableOrFactory: Listenable,
+): listenableOrFactory is ListenableObject {
+  return 'listen' in listenableOrFactory;
 }

@@ -173,6 +173,14 @@ interface Options {
 }
 ```
 
+Additionally, you can also pass a `ListenerFactory` to facilitate wrapping unusual server APIs which don't have an adapter pre-built.
+
+```ts
+const wrapper = await saddle((port, host) =>
+  somethingThatReturnsAServer(port, host),
+);
+```
+
 #### `unsaddle()`
 
 Runs `stop` on every instance of `saddle` which has been created.
@@ -345,7 +353,37 @@ This matcher checks if the corresponding `ctx` object for a given request has a 
 await expect(wrapper).toHaveKoaState({user: 'maru'});
 ```
 
-## Writing custom adapters
+## FAQ
+
+### How do I make this work with a framework that doesn't expose `.listen`?
+
+Some libraries do not use the standard `.listen` API to generate a server. That's no problem for `SaddleUp` though. You can use the alternative API to pass a function to your saddle instance.
+
+For example, we could hook up `hapi` like so:
+
+```ts
+import Hapi from '@hapi/hapi';
+import {saddle} from 'saddle-up';
+import someHapiRoute from './route';
+
+const wrapper = await saddle((port, host) => {
+  const server = Hapi.server({
+    port,
+    host,
+  });
+
+  server.route(someHapiRoute);
+
+  server.start();
+  return server.listener;
+});
+
+const resp = await wrapper.fetch('/');
+```
+
+With this function API you can make it work for all sorts of frameworks.
+
+### How can I write a custom matcher?
 
 This part of the docs is under construction. if you are really excited to make a thing, check out the existing adapters for inspiration.
 

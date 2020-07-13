@@ -1,20 +1,24 @@
 import {Response as FetchResult, Request as FetchRequest} from 'node-fetch';
 import express, {Handler, Express} from 'express';
 
-import {Adapter} from '..';
+import {Adapter, Options} from '..';
 import {preuse} from './utilities';
 
 export {FetchResult};
 
-export interface DecorationOptions {
+export interface DecorationOptions extends Options {
   beforeMiddleware?: Handler[];
   afterMiddleware?: Handler[];
 }
 
-export class ExpressAdapter implements Adapter<FetchResult> {
+export class ExpressAdapter
+  implements Adapter<Handler | Express, FetchResult, DecorationOptions> {
   decorate(
     appOrMiddleware: Handler | Express,
-    {beforeMiddleware = [], afterMiddleware = []}: DecorationOptions = {},
+    {
+      beforeMiddleware = [],
+      afterMiddleware = [],
+    }: Partial<DecorationOptions> = {},
   ) {
     const app =
       typeof appOrMiddleware === 'function' ? express() : appOrMiddleware;

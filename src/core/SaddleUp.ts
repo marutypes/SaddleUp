@@ -14,8 +14,8 @@ export enum Headers {
   SetCookie = 'Set-Cookie',
 }
 
-export class SaddleUp<FetchResult extends Response = Response> {
-  private static instances: SaddleUp[] = [];
+export class SaddleUp<AppInput, FetchResult, Opts> {
+  private static instances: SaddleUp<any, any, any>[] = [];
 
   static async closeAll() {
     for (const server of SaddleUp.instances) {
@@ -25,9 +25,25 @@ export class SaddleUp<FetchResult extends Response = Response> {
     SaddleUp.instances = [];
   }
 
-  static async create<T extends Response = Response>(
+  static adapt<AppInput, FetchResult extends Response, Opts extends Options>(
+    adapter: Adapter<AppInput, FetchResult, Opts>,
+  ) {
+    return (app: AppInput, options: Partial<Opts> = {}) => {
+      return SaddleUp.create<AppInput, FetchResult, Opts>(
+        adapter.decorate(app, options),
+        adapter,
+        options,
+      );
+    };
+  }
+
+  static async create<
+    AppInput,
+    FetchResult extends Response,
+    Opts extends Options
+  >(
     listenable: Listenable,
-    adapter: Adapter<T>,
+    adapter: Adapter<AppInput, FetchResult, Opts>,
     opts: Partial<Options> = {},
   ) {
     if (opts.port && (await inUse(opts.port))) {
@@ -44,7 +60,7 @@ export class SaddleUp<FetchResult extends Response = Response> {
     };
 
     const server = await listen(listenable, options.port, options.host);
-    const saddle = new SaddleUp<T>(server, adapter);
+    const saddle = new SaddleUp<AppInput, FetchResult, Opts>(server, adapter);
 
     for (const cookieName of Object.keys(options.cookies)) {
       saddle.setCookie(cookieName, options.cookies[cookieName]);
@@ -58,7 +74,7 @@ export class SaddleUp<FetchResult extends Response = Response> {
 
   private constructor(
     private server: Server,
-    private adapter: Adapter<FetchResult>,
+    private adapter: Adapter<AppInput, FetchResult, Opts>,
   ) {
     this.cookieJar = new CookieJar(new MemoryCookieStore(), {looseMode: true});
     SaddleUp.instances.push(this);

@@ -1,20 +1,24 @@
 import {Response, Request} from 'node-fetch';
 import createServer, {HandleFunction} from 'connect';
 
-import {Adapter} from '..';
+import {Adapter, Options} from '..';
 import {preuse} from './utilities';
 
 export type FetchResult = Response;
 
-export interface DecorationOptions {
+export interface DecorationOptions extends Options {
   beforeMiddleware?: HandleFunction[];
   afterMiddleware?: HandleFunction[];
 }
 
-export class ConnectAdapter implements Adapter<FetchResult> {
+export class ConnectAdapter
+  implements Adapter<createServer.Server, FetchResult, DecorationOptions> {
   decorate(
     appOrMiddleware: HandleFunction | createServer.Server,
-    {beforeMiddleware = [], afterMiddleware = []}: DecorationOptions = {},
+    {
+      beforeMiddleware = [],
+      afterMiddleware = [],
+    }: Partial<DecorationOptions> = {},
   ) {
     const app =
       typeof appOrMiddleware === 'function' ? createServer() : appOrMiddleware;

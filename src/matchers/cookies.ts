@@ -51,7 +51,7 @@ export function toHaveSetCookie(
 
 export function toHaveCookies(
   this: jest.MatcherUtils,
-  saddle: SaddleUp<any>,
+  saddle: SaddleUp<any, any, any>,
   expectedCookies: Record<string, string>,
 ) {
   const expectation = 'toHaveCookies';
