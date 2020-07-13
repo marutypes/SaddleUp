@@ -21,8 +21,6 @@ yarn add saddle-up --dev
 
 ## 🔧 Usage 🔧
 
-SaddleUp allows you to test components with a focus on type safety and testing based on a component’s external API. In order to keep the API small and easy-to-use, it will generally track to only the latest minor release of React.
-
 ### The Gist
 
 A testcase using saddle tends to have more or less the following structure:
