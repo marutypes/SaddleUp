@@ -8,7 +8,7 @@ export function unsaddle() {
   return SaddleUp.closeAll();
 }
 
-class CoreAdapter implements Adapter<Listenable, Response, Options> {
+export class DefaultAdapter implements Adapter<Listenable, Response, Options> {
   decorate(app: Listenable, _options: Options): Listenable {
     return app;
   }
@@ -18,5 +18,5 @@ class CoreAdapter implements Adapter<Listenable, Response, Options> {
   }
 }
 
-const defaultAdapter = new CoreAdapter();
+const defaultAdapter = new DefaultAdapter();
 export const saddle = SaddleUp.adapt(defaultAdapter);
