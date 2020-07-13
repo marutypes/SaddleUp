@@ -1,5 +1,8 @@
 # 🐴 SaddleUp 🐴
 
+![CI status](https://github.com/TheMallen/SaddleUp/workflows/CI/badge.svg)
+[![npm version](https://badge.fury.io/js/saddle-up.svg)](https://badge.fury.io/js/saddle-up)
+
 An easy-to-use testing framework for node servers everywhere.
 
 ```bash
