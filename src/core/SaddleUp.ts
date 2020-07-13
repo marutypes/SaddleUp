@@ -28,9 +28,9 @@ export class SaddleUp<AppInput, FetchResult, Opts> {
   static adapt<AppInput, FetchResult extends Response, Opts extends Options>(
     adapter: Adapter<AppInput, FetchResult, Opts>,
   ) {
-    return (app: AppInput, options: Partial<Opts> = {}) => {
+    return async (app: AppInput, options: Partial<Opts> = {}) => {
       return SaddleUp.create<AppInput, FetchResult, Opts>(
-        adapter.decorate(app, options),
+        await adapter.decorate(app, options),
         adapter,
         options,
       );

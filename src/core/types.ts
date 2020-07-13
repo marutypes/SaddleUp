@@ -20,5 +20,8 @@ export interface ListenableObject {
 
 export interface Adapter<AppInput, FetchResult, Opts = Options> {
   decorate(app: AppInput, options?: Partial<Opts>): Listenable;
-  fetchResult(request: Request, response: Response): FetchResult;
+  fetchResult(
+    request: Request,
+    response: Response,
+  ): FetchResult | Promise<FetchResult>;
 }
