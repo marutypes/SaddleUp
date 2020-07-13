@@ -12,7 +12,7 @@ export function listen(
       : listenableOrFactory(port, host);
 
     if (listenable instanceof Server && listenable.listening) {
-      return listenable;
+      return resolve(listenable);
     }
 
     const server = listenable
