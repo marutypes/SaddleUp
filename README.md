@@ -99,8 +99,8 @@ import {visitCounter} from './visit-counter';
 describe('MyApp', () => {
   it('iterates visitors every visit', async () => {
     const wrapper = await saddle(visitCounter);
-    const = await wrapper.fetch('/');
-    expect(ctx).toHaveHeaders({'x-visits': 1});
+    const resp = await wrapper.fetch('/');
+    expect(resp).toHaveHeaders({'x-visits': 1}
   });
 });
 ```
