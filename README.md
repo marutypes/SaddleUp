@@ -351,7 +351,7 @@ await expect(wrapper).toHaveCookies({user: 'maru'});
 This matcher checks if the corresponding `ctx` object for a given request has a subset of key/value pairs on it's `state`.
 
 ```ts
-await expect(wrapper).toHaveKoaState({user: 'maru'});
+await expect(response).toHaveKoaState({user: 'maru'});
 ```
 
 ## FAQ
