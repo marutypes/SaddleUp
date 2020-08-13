@@ -2,6 +2,7 @@
   "name": "saddle-up",
   "version": "0.5.1",
   "description": "An easy-to-use testing framework for node servers everywhere",
+  "homepage": "https://github.com/TheMallen/SaddleUp",
   "main": "src/index.mjs",
   "scripts": {
     "test": "sk test",
@@ -21,6 +22,10 @@
     "jest-matcher-utils": "^26.1.0",
     "node-fetch": "^2.6.0",
     "tough-cookie": "^4.0.0"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/TheMallen/SaddleUp.git"
   },
   "devDependencies": {
     "@hapi/hapi": "^19.1.1",
