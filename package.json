@@ -1,6 +1,6 @@
 {
   "name": "saddle-up",
-  "version": "0.5.1",
+  "version": "0.5.4",
   "description": "An easy-to-use testing framework for node servers everywhere",
   "homepage": "https://github.com/TheMallen/SaddleUp",
   "main": "src/index.mjs",
@@ -10,7 +10,7 @@
     "type-check": "sk type-check",
     "build": "sk build",
     "prerelease": "yarn build",
-    "release": "yarn publish"
+    "release": "yarn version"
   },
   "keywords": [
     "koa",
@@ -24,8 +24,8 @@
     "tough-cookie": "^4.0.0"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/TheMallen/SaddleUp.git"
+    "type": "git",
+    "url": "https://github.com/TheMallen/SaddleUp.git"
   },
   "devDependencies": {
     "@hapi/hapi": "^19.1.1",
